@@ -1,0 +1,124 @@
+.logo .dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.index label {
+	font-family: Roboto, sans-serif;
+}
+
+.bg	{
+	background: url(../images/bg2.jpg);
+	max-width: 100%;
+	height: 100%;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	border-radius: 5px;
+	text-align: center;
+	color: #fff;
+	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-color: ;
+}
+
+.bg h2 {
+	margin-top: 0px;
+	font-family: Roboto, sans-serif;
+	font-size: 30px;
+	padding-top: 60px
+}
+
+.bg p {
+	font-size: 13px;
+	margin-bottom: 20px;
+	font-family: Roboto, sans-serif;
+}
+
+.new {
+	
+	margin-top: 60px;
+	margin-bottom: 20px;
+	
+	
+}
+
+.new span a {
+	color: #fff;
+	font-size: 14px;
+	font-family: sans-serif;
+	border: 1.5px solid #fff;
+	padding: 10px 35px!important;
+	
+}
+.new span a:hover {
+	text-decoration: none;
+	cursor: pointer;
+    background-color: ;
+}
+
+.cat span a {
+	color: #000;
+	font-size: 16px;
+	font-family: sans-serif;
+	border: 1px solid #000;
+	padding: 10px 35px!important;
+	top: 10px!important;
+}
+.cat span a:hover {
+	text-decoration: none;
+	cursor: pointer;
+    background-color: ;
+}
+
+.brand span a {
+	color: #000;
+	font-size: 16px;
+	font-family: sans-serif;
+	border: 1px solid #000;
+	padding: 10px 35px!important;
+	top: 10px!important;
+}
+.brand span a:hover {
+	text-decoration: none;
+	cursor: pointer;
+    background-color: ;
+}
+
+.product span a {
+	color: #000;
+	font-size: 16px;
+	font-family: sans-serif;
+	border: 1px solid #000;
+	padding: 10px 35px!important;
+	top: 10px!important;
+}
+
+.product span a:hover {
+	text-decoration: none;
+	cursor: pointer;
+    background-color: ;
+}
+
+.manage h4 {
+	font-family: Roboto, sans-serif;
+}
+
+.manage p {
+	font-size: 13px;
+}
+
+
