@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	const DOMAIN = "http://localhost/inv_project";
+
 	$("#register_form").on("submit", () => {
 
 		let status = false;
@@ -7,6 +9,7 @@ $(document).ready(function() {
 		let email = $("#email");
 		let pass1 = $("#password1");
 		let pass2 = $("#password2");
+		let userType = $("#usertype");
 
 		//email pattern using Regular Expression
 		let e_patt = new RegExp(/^[a-z0-9_-]+(\.[a-z0-9_-]+)*@[a-z0-9_-]+(\.[a-z0-9_-]+)*(\.[a-z]{2,4})$/);
@@ -49,7 +52,7 @@ $(document).ready(function() {
 		//validate password2 field
 		if (pass2.val() == "" || pass2.val().length < 8) {
 			pass2.addClass("border-danger");
-			$("#p2_error").html("<span class='text-danger'>Password must be more than 7 characters</span>");
+			$("#p2_error").html(`<span class='text-danger'>Password must be more than 7 characters</span>`);
 			status = false;
 
 		} else {
@@ -58,17 +61,44 @@ $(document).ready(function() {
 			status = true;
 		}
 
-		if (pass1.val() == pass2.val()) {
+		//Validate User type
+		if (userType.val() === "") {
+			userType.addClass("border-danger");
+			$("#t_error").html("<span class='text-danger'>This field cannot be empty</span>");
+			status = false;
+
+		} else {
+			userType.removeClass("border-danger");
+			$("#t_error").html("");
+			status = true;
+
+		}
+
+		//Validate Passwords
+		if ((pass1.val() === pass2.val()) && status == true) {
 
 			$.ajax({
+				url: DOMAIN + "/includes/process.php",
+				method: "POST",
+				data: $("#register_form").serialize(),
+				success: function(data) {
+					if (data === "EMAIL_ALREADY_EXIST") {
+						alert("Email already used :(");
 
+					} else if( data === "SOME_ERROR") {
+						alert("Something went wrong!!!");
+
+					} else {
+						window.location.href = encodeURI(DOMAIN + "/index.php?msg=You are registered, Kindly Login");
+					}
+				}
 			});
 			
 		} else {
 			pass2.addClass("border-danger");
 			$("#p2_error").html("<span class='text-danger'>Passwords do not Match :(</span>");
 			status = false;
-		}
+		} 
 
 
 	});

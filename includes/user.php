@@ -39,7 +39,7 @@ class User {
 
 		if ($this->emailExist($email)) {
 
-			return "Email Already Exist :(";
+			return "EMAIL_ALREADY_EXIST";
 
 		} else {
 
@@ -56,7 +56,7 @@ class User {
 			if ($result) {
 				return $this->con->insert_id;
 			} else {
-				return "REGISTRATION FAILED";
+				return "SOME_ERROR";
 			}
 
 		}
