@@ -160,4 +160,23 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+
+
+	///Fetch Category
+	fetchCategory();
+	function fetchCategory() {
+		$.ajax({
+			url: DOMAIN + "/includes/process.php",
+			method: "POST",
+			data: {getCategory: 1},
+			success: function(data) {
+				const root = "<option value='0'>Root</option>";
+				$("#parent_cat").html(root + data);
+			}
+		});
+
+
+	}
+	
 });
