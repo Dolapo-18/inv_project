@@ -73,7 +73,7 @@ class User {
 		$result = $pre_stmt->get_result();
 
 		if ($result->num_rows < 1) {
-			 return "USER NOT REGISTERED";
+			 return "USER_NOT_REGISTERED";
 		} else {
 			$row = $result->fetch_assoc();
 
@@ -96,7 +96,7 @@ class User {
 
 			} else {
 
-				return "Password Mismatch Error";
+				return "PASSWORD_MISMATCH_ERROR";
 			}
 		}
 	}

@@ -82,14 +82,14 @@ $(document).ready(function() {
 				method: "POST",
 				data: $("#register_form").serialize(),
 				success: function(data) {
-					if (data === "EMAIL_ALREADY_EXIST") {
+					if (data == "EMAIL_ALREADY_EXIST") {
 						alert("Email already used :(");
 
-					} else if( data === "SOME_ERROR") {
+					} else if( data == "SOME_ERROR") {
 						alert("Something went wrong!!!");
 
 					} else {
-						window.location.href = encodeURI(DOMAIN + "/index.php?msg=You are registered, Kindly Login");
+						window.location.href = encodeURI(DOMAIN + "/index.php?msg=Registration Successful. Kindly Login");
 					}
 				}
 			});
@@ -101,5 +101,63 @@ $(document).ready(function() {
 		} 
 
 
+	});
+
+
+
+	////Login Part
+	$("#login_form").on("submit", () => {
+
+		let log_email = $("#log_email");
+		let log_password = $("#log_password");
+		let status = false;
+
+		//email pattern using Regular Expression
+		let e_patt = new RegExp(/^[a-z0-9_-]+(\.[a-z0-9_-]+)*@[a-z0-9_-]+(\.[a-z0-9_-]+)*(\.[a-z]{2,4})$/);
+
+		if (!e_patt.test(log_email.val()) || log_email.val() == "") {
+			log_email.addClass("border-danger");
+			$("#e_error").html("<span class='text-danger'>Please Enter a Valid Email Address</span>");
+			status = false;
+
+		} else {
+			log_email.removeClass("border-danger");
+			$("#e_error").html("");
+			status = true;
+		}
+
+		if (log_password.val() == "") {
+			log_password.addClass("border-danger");
+			$("#p_error").html("<span class='text-danger'>Password can't be empty</span>");
+			status = false;
+
+		} else {
+			log_password.removeClass("border-danger");
+			$("#p_error").html("");
+			status = true;
+		}
+
+		if (status) {
+			$.ajax({
+				url: DOMAIN + "/includes/process.php",
+				method: "POST",
+				data: $("#login_form").serialize(),
+				success: function(data) {
+					if (data == "USER_NOT_REGISTERED") {
+						log_email.addClass("border-danger");
+						$("#e_error").html("<span class='text-danger'>Sorry! You Haven't Registered Yet.</span>");
+
+					} else if( data == "PASSWORD_MISMATCH_ERROR") {
+						log_password.addClass("border-danger");
+						$("#p_error").html("<span class='text-danger'>Please Enter Correct Password.</span>");
+						
+
+					} else {
+						window.location.href = encodeURI(DOMAIN + "/dashboard.php");
+
+					}
+				}
+			});
+		}
 	});
 });

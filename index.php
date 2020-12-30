@@ -28,20 +28,33 @@
 
 <section style="margin-top: 25px;">
 	<div class="container" style="font-size: 14px; font-family: Roboto">
+		<?php 
+			if (isset($_GET["msg"]) && !empty($_GET["msg"])) {
+				?>
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+					   <?php echo $_GET["msg"]; ?>
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					  </button>
+					</div>
+
+				<?php
+			}
+		 ?>
 		<div class="card mx-auto" style="width: 18rem; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
 		  <img src="./images/login.jpg" class="card-img-top" alt="..." height="250px">
 
 		  <div class="card-body index">
-		    <form>
+		    <form id="login_form" onsubmit="return false">
 			  <div class="form-group">
 			    <label for="exampleInputEmail1"><b>Email address</b></label>
-			    <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" placeholder="jdoe@linkageassurance.com">
+			    <input type="email" class="form-control form-control-sm" name="log_email" id="log_email" placeholder="jdoe@linkageassurance.com">
 			    <small id="e_error" class="form-text text-muted"></small>
 
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1"><b>Password</b></label>
-			    <input type="password" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Password">
+			    <input type="password" class="form-control form-control-sm" name="log_password" id="log_password" placeholder="Password">
 			    <small id="p_error" class="form-text text-muted"></small>
 			  </div>
 			  
