@@ -21,7 +21,7 @@ class User {
 
 	private function emailExist($email) {
 		//Using prepared statement to check if email already exist in the DB
-		$pre_stmt = $this->con->prepare("SELECT id FROM users WHERE email = ?");
+		$pre_stmt = $this->con->prepare("SELECT user_id FROM users WHERE email = ?");
 		$pre_stmt->bind_param("s", $email);
 		$pre_stmt->execute() or die($this->con->error);
 		//get result
@@ -67,7 +67,7 @@ class User {
 
 	public function userLogin($email, $password) {
 
-		$pre_stmt = $this->con->prepare("SELECT id, username, password, last_login FROM users WHERE email = ?");
+		$pre_stmt = $this->con->prepare("SELECT user_id, username, password, last_login FROM users WHERE email = ?");
 		$pre_stmt->bind_param('s', $email);
 		$pre_stmt->execute() or die($this->con->error);
 		$result = $pre_stmt->get_result();
@@ -78,7 +78,7 @@ class User {
 			$row = $result->fetch_assoc();
 
 			if (password_verify($password, $row['password'])) {
-				$_SESSION['id'] = $row['id'];
+				$_SESSION['user_id'] = $row['user_id'];
 				$_SESSION['username'] = $row['username'];
 				$_SESSION['last_login'] = $row['last_login'];
 

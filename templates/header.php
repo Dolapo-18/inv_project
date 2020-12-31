@@ -15,9 +15,17 @@
 
   <div class="navbar-collapse collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-user"></i>&nbsp;Logout</a>
+      <?php 
+
+        if (isset($_SESSION["user_id"])) {
+          ?>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php"><i class="fa fa-user"></i>&nbsp;Logout</a>
         </li>
+        <?php
+        }
+       ?>
+        
         
     </ul>
 </div>

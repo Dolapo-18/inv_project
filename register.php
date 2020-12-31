@@ -17,7 +17,9 @@
 	<link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-
+<div class="overlay">
+	<div class="loader"></div>
+</div>
 
 <!-- Navbar -->
 <section >
