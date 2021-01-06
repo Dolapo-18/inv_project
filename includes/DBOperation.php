@@ -20,12 +20,41 @@ class DBOperation {
 		$result = $pre_stmt->execute() or die();
 
 		if ($result) {
-			return "CATEGORY_ADDED_SUCCESSFULLY";
+			return "CATEGORY_ADDED";
 		} else {
 			return 0;
 		}
 
 
+	}
+
+
+	public function addBrand($brand_name) {
+		$status = 1;
+		$pre_stmt = $this->con->prepare("INSERT INTO `brands`(`brand_name`, `status`) VALUES (?,?)");
+		$pre_stmt->bind_param("si", $brand_name, $status);
+		$result = $pre_stmt->execute() or die();
+
+		if ($result) {
+			return "BRAND_ADDED";
+		} else {
+			return 0;
+		}
+	}
+
+
+
+	public function addProduct($cat_id, $brand_id, $product_name, $product_price, $product_stock, $added_date) {
+		$status = 1;
+		$pre_stmt = $this->con->prepare("INSERT INTO `products`(`cat_id`, `brand_id`, `product_name`, `product_price`, `product_stock`, `added_date`, `p_status`) VALUES (?,?,?,?,?,?,?)");
+		$pre_stmt->bind_param("iisdisi", $cat_id, $brand_id, $product_name, $product_price, $product_stock, $added_date, $status);
+		$result = $pre_stmt->execute() or die($this->con->error);
+
+		if ($result) {
+			return "PRODUCT_ADDED";
+		} else {
+			return "SOMETHING_WENT_WRONG";
+		}
 	}
 
 

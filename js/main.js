@@ -151,12 +151,12 @@ $(document).ready(function() {
 				method: "POST",
 				data: $("#login_form").serialize(),
 				success: function(data) {
-					if (data == "USER_NOT_REGISTERED") {
+					if (data === "USER_NOT_REGISTERED") {
 						$(".overlay").hide();
 						log_email.addClass("border-danger");
-						$("#e_error").html("<span class='text-danger'>Sorry! You Haven't Registered Yet.</span>");
+						$("#e_error").html("<span class='text-danger'><b>Sorry! You Haven't Registered Yet.</b></span>");
 
-					} else if( data == "PASSWORD_MISMATCH_ERROR") {
+					} else if( data === "PASSWORD_MISMATCH_ERROR") {
 						$(".overlay").hide();
 						log_password.addClass("border-danger");
 						$("#p_error").html("<span class='text-danger'>Please Enter Correct Password.</span>");
@@ -183,11 +183,208 @@ $(document).ready(function() {
 			data: {getCategory: 1},
 			success: function(data) {
 				const root = "<option value='0'>Root</option>";
+				const choose = "<option value=''>---Select Category---</option>";
 				$("#parent_cat").html(root + data);
+				$("#select_cat").html(choose + data);
 			}
 		});
 
 
 	}
+
+
+
+///Fetch Brand
+	fetchBrand();
+	function fetchBrand() {
+		$.ajax({
+			url: DOMAIN + "/includes/process.php",
+			method: "POST",
+			data: {getBrand: 1},
+			success: function(data) {
+				const brands = "<option value=''>---Select Brand---</option>";
+				$("#select_brand").html(brands + data);
+			}
+		});
+
+
+	}
+
+
+
+	///////////Add Category Form
+	$("#category_form").on("submit", () => {
+		let cat_report = $("#cat_report");
+		let cat_name = $("#category_name");
+
+		if (cat_name.val() == "") {
+			cat_name.addClass("border-danger");
+			$("#cat_error").html("<span class='text-danger'>This field can't be empty.</span>");
+
+		} else {
+			$.ajax({
+				url: DOMAIN + "/includes/process.php",
+				method: "POST",
+				data: $("#category_form").serialize(),
+				success: function(data) {
+					if (data === "CATEGORY_ADDED") {
+						cat_name.removeClass("border-danger");
+						$("#cat_report").html("<span class='text-success'><b>New Category Added Successfuly!!!</b></span>");
+						cat_name.val("");
+						fetchCategory(); //fetch new category
+
+						//alert disappears after 5sec
+						setTimeout(function() {
+							$("#cat_report").html("");
+						}, 5000);
+
+					} else {
+						 //alert("Sorry, Category Name Already Exist!!!");
+						 cat_name.addClass("border-danger");
+						$("#cat_error").html("<span class='text-danger'><b>Category Name Already Exist!!!</b></span>");
+					}
+
+					
+				}
+			});
+		}
+
+	
+	});
+
+
+
+
+	////////////Add Brand Form
+	$("#brand_form").on("submit", () => {
+		let brand_report = $("#brand_report");
+		let brand_name = $("#brand_name");
+
+		if (brand_name.val() === "") {
+			brand_name.addClass("border-danger");
+			$("#brand_error").html("<span class='text-danger'>This field cannot be empty!</span>");
+
+		} else {
+			$.ajax({
+				url: DOMAIN + "/includes/process.php",
+				method: "POST",
+				data: $("#brand_form").serialize(),
+				success: function(data) {
+
+					if (data === "BRAND_ADDED") {
+						brand_name.removeClass("border-danger");
+						$("#brand_report").html("<span class='text-success'><b>New Brand Added Successfully!!!</b></span>");
+						brand_name.val("");
+						fetchBrand();
+
+					} else {
+						//alert("Sorry, Brand Name Already Exist!!!");
+						brand_name.addClass("border-danger");
+						$("#brand_error").html("<span class='text-danger'><b>Sorry, Brand Name Already Exist!!!</b></span>");
+					}
+					
+				}
+			});
+		}
+
+	});
+
+
+
+	///////////////Add Product  
+	$("#product_form").on("submit", () => {
+		let report = $("#product_report");
+		let product_name = $("#product_name");
+		let select_cat = $("#select_cat");
+		let select_brand = $("#select_brand");
+		let product_price = $("#product_price");
+		let product_stock = $("#product_stock");
+		let status = false;
+
+		
+
+
+
+		if (product_name.val() === "") {
+			product_name.addClass("border-danger");
+			$("#p_error").html("<span class='text-danger'>Product Name cannot be empty!</span>");
+			status = false;
+
+		} else {
+			product_name.removeClass("border-danger");
+			$("#p_error").html("");
+			status = true;
+		}
+
+		if (select_cat.val() === "") {
+			select_cat.addClass("border-danger");
+			$("#c_error").html("<span class='text-danger'>Category Name cannot be empty!</span>");
+			status = false;
+
+		} else {
+			select_cat.removeClass("border-danger");
+			$("#c_error").html("");
+			status = true;
+		}
+
+		if (select_brand.val() === "") {
+			select_brand.addClass("border-danger");
+			$("#b_error").html("<span class='text-danger'>Brand Name cannot be empty!</span>");
+			status = false;
+
+		} else {
+			select_brand.removeClass("border-danger");
+			$("#b_error").html("");
+			status = true;
+		}
+
+		if (product_price.val() === "") {
+			product_price.addClass("border-danger");
+			$("#price_error").html("<span class='text-danger'>Price cannot be empty!</span>");
+			status = false;
+
+		} else {
+			product_price.removeClass("border-danger");
+			$("#price_error").html("");
+			status = true;
+		}
+
+
+		if (product_stock.val() === "") {
+			product_stock.addClass("border-danger");
+			$("#stock_error").html("<span class='text-danger'>Price cannot be empty!</span>");
+			status = false;
+
+		} else {
+			product_stock.removeClass("border-danger");
+			$("#stock_error").html("");
+			status = true;
+		}
+
+		if (status) {
+			$.ajax({
+				url: DOMAIN + "/includes/process.php",
+				method: "POST",
+				data: $("#product_form").serialize(),
+				success: function(data) {
+
+					if (data === "PRODUCT_ADDED") {
+						$("#product_name").val("");
+						$("#product_price").val("");
+						$("#product_stock").val("");
+						$("#product_report").html("<span class='text-success'><b>New Product Added Successfully!!!</b></span>");
+						
+						
+
+					} else {
+						$("#product_report").html("<span class='text-danger'><b>Sorry, Product Name Already Exist!!!</b></span>");
+						product_name.addClass("border-danger");
+						
+					}
+				}
+
+			});
+		}
+	});
 	
 });
