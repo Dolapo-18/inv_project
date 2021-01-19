@@ -13,11 +13,12 @@ class DBOperation {
 	}
 
 
+
 	public function addCategory($parent_cat, $cat_name) {
 		$status = 1;
 		$pre_stmt = $this->con->prepare("INSERT INTO `categories`(`parent_cat`, `category_name`, `status`) VALUES (?,?,?)");
 		$pre_stmt->bind_param("isi", $parent_cat, $cat_name, $status);
-		$result = $pre_stmt->execute() or die();
+		$result = $pre_stmt->execute() or die($this->con->error);
 
 		if ($result) {
 			return "CATEGORY_ADDED";
@@ -75,6 +76,11 @@ class DBOperation {
 		}
 
 	}
+
+
+
+
+	
 
 
 

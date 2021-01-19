@@ -213,42 +213,30 @@ $(document).ready(function() {
 
 
 	///////////Add Category Form
-	$("#category_form").on("submit", () => {
-		let cat_report = $("#cat_report");
-		let cat_name = $("#category_name");
-
-		if (cat_name.val() == "") {
-			cat_name.addClass("border-danger");
-			$("#cat_error").html("<span class='text-danger'>This field can't be empty.</span>");
-
-		} else {
+	$("#category_form").on("submit", function() {
+		if ($("#category_name").val() == "") {
+			$("#category_name").addClass("border-danger");
+			$("#cat_error").html("<span class='text-danger'>Please Enter Category Name</span>");
+		}else{
 			$.ajax({
-				url: DOMAIN + "/includes/process.php",
-				method: "POST",
-				data: $("#category_form").serialize(),
-				success: function(data) {
-					if (data === "CATEGORY_ADDED") {
-						cat_name.removeClass("border-danger");
-						$("#cat_report").html("<span class='text-success'><b>New Category Added Successfuly!!!</b></span>");
-						cat_name.val("");
-						fetchCategory(); //fetch new category
+				url : DOMAIN + "/includes/process.php",
+				method : "POST",
+				data  : $("#category_form").serialize(),
+				success : function(data){
+					if (data == "CATEGORY_ADDED") {
+							$("#category_name").removeClass("border-danger");
+							$("#cat_error").html("<span class='text-success'><b>New Category Added Successfully..!</b></span>");
+							$("#category_name").val("");
+							fetchCategory();
 
-						//alert disappears after 5sec
-						setTimeout(function() {
-							$("#cat_report").html("");
-						}, 5000);
-
-					} else {
-						 //alert("Sorry, Category Name Already Exist!!!");
-						 cat_name.addClass("border-danger");
-						$("#cat_error").html("<span class='text-danger'><b>Category Name Already Exist!!!</b></span>");
+					}else{
+						 $("#category_name").addClass("border-danger");
+					     $("#cat_error").html("<span class='text-danger'><b>Category Name Already Exist!!!</b></span>");
 					}
-
-					
 				}
-			});
+			})
 		}
-
+		
 	
 	});
 
@@ -257,35 +245,30 @@ $(document).ready(function() {
 
 	////////////Add Brand Form
 	$("#brand_form").on("submit", () => {
-		let brand_report = $("#brand_report");
-		let brand_name = $("#brand_name");
-
-		if (brand_name.val() === "") {
-			brand_name.addClass("border-danger");
-			$("#brand_error").html("<span class='text-danger'>This field cannot be empty!</span>");
-
-		} else {
+		if ($("#brand_name").val() == "") {
+			$("#brand_name").addClass("border-danger");
+			$("#brand_error").html("<span class='text-danger'>Please Enter Brand Name</span>");
+		}else{
 			$.ajax({
-				url: DOMAIN + "/includes/process.php",
-				method: "POST",
-				data: $("#brand_form").serialize(),
-				success: function(data) {
-
-					if (data === "BRAND_ADDED") {
-						brand_name.removeClass("border-danger");
-						$("#brand_report").html("<span class='text-success'><b>New Brand Added Successfully!!!</b></span>");
-						brand_name.val("");
+				url : DOMAIN + "/includes/process.php",
+				method : "POST",
+				data : $("#brand_form").serialize(),
+				success : function(data){
+					if (data == "BRAND_ADDED") {
+						$("#brand_name").removeClass("border-danger");
+						$("#brand_error").html("<span class='text-success'><b>New Brand Added Successfully..!</b></span>");
+						$("#brand_name").val("");
 						fetchBrand();
-
-					} else {
-						//alert("Sorry, Brand Name Already Exist!!!");
-						brand_name.addClass("border-danger");
+						
+					}else{
+						$("#brand_name").addClass("border-danger");
 						$("#brand_error").html("<span class='text-danger'><b>Sorry, Brand Name Already Exist!!!</b></span>");
 					}
-					
+						
 				}
-			});
+			})
 		}
+		
 
 	});
 
@@ -386,5 +369,14 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+
+
+
+
+
+
+	
+
 	
 });
