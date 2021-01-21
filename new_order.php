@@ -39,8 +39,8 @@
 	<div class="row">
 		<div class="col-md-10 mx-auto">
 			<div class="card" style="box-shadow: 0 0 25px 0 lightgrey;">
-			  <div class="card-header">
-			    <h4>New Orders</h4>
+			  <div class="card-header text-center">
+			    <h5>New Request</h5>
 			  </div>
 
 			  <div class="card-body">
@@ -53,11 +53,35 @@
 			    	</div>
 
 			    	<div class="form-group row">
-			    		<label for="" class="col-sm-3 col-form-label" align="right">Staff Name*</label>
-			    		<div class="col-sm-6">
-			    			<input type="text" class="form-control form-control-sm" placeholder="Enter Staff Name" required />
-			    		</div>
-			    	</div>
+					    <label for="inputEmail3" class="col-sm-2 col-form-label" align="right">Staff Name*</label>
+					    <div class="col-sm-4">
+					      <input type="text" class="form-control form-control-sm" name="staff_name" id="staff_name">
+					    </div>
+
+					    <label for="" class="col-sm-2 col-form-label">Department*</label>
+					    	<div class="col-sm-4" align="left">
+							 <select name="department" class="form-control form-control-sm" id="department">
+				              <option value="">Choose User Type</option>
+				              <option value="Admin">Admin</option>
+				              <option value="Other">Other</option>
+				            </select>
+				        </div>
+				  	</div>
+
+			    	<!-- <div class="form-group row">
+					    <div class="col-sm-5">
+					      <label for="">Staff Name*</label>
+					      <input type="" class="form-control form-control-sm" id="inputEmail4">
+					    </div>
+					    <div class="col-sm-5">
+					      <label for="">Department*</label>
+							 <select name="department" class="form-control form-control-sm" id="department">
+				              <option value="">Choose User Type</option>
+				              <option value="Admin">Admin</option>
+				              <option value="Other">Other</option>
+				            </select>
+					    </div>
+					  </div> -->
 
 			    	<div class="card" style="box-shadow: 0 0 15px 0 lightgrey;">
 			    		<div class="card-body">
@@ -105,15 +129,15 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="gst" class="col-sm-3 col-form-label" align="right">GST (18%)</label>
+                      <label for="gst" class="col-sm-3 col-form-label" align="right">VAT (7.5%)</label>
                       <div class="col-sm-6">
-                        <input type="text" readonly name="gst" class="form-control form-control-sm" id="gst" required/>
+                        <input type="text" readonly name="vat" class="form-control form-control-sm" id="vat" required/>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="discount" class="col-sm-3 col-form-label" align="right">Discount</label>
                       <div class="col-sm-6">
-                        <input type="text" name="discount" class="form-control form-control-sm" id="discount" required/>
+                        <input type="text" name="discount" class="form-control form-control-sm" id="discount" placeholder="Input your discount value" required/>
                       </div>
                     </div>
                     <div class="form-group row">

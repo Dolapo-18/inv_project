@@ -27,6 +27,7 @@ $(document).ready(() => {
 	//this removes the last child when clicked
 	$("#remove").click(function() {
 		$("#invoice_item").children("tr:last").remove();
+		calculate(); //calculate subtotal
 	});
 
 
@@ -47,6 +48,7 @@ $(document).ready(() => {
 				tr.find(".qty").val(1);
 				tr.find(".price").val(data["product_price"]);
 				tr.find(".amt").html(tr.find(".qty").val() * tr.find(".price").val());
+				calculate(); //calculate subtotal
 
 			}
 		});
@@ -71,12 +73,68 @@ $(document).ready(() => {
 
 			} else {
 				tr.find(".amt").html(qty.val() * tr.find(".price").val());
+				calculate(); //calculate subtotal
 
 			}
 
 	}
 
 	});
+
+
+
+	/////function calculate
+	function calculate(dis) {
+		let sub_total = 0; 
+		let vat = 0;
+		let net_total = 0;
+		let discount = dis;
+
+		//set dicount value to user's input
+		if ($("#discount").val() == "") {
+			discount = 0;
+
+		} else if(isNaN($("#discount").val())) {
+			alert("Please Enter a Valid Quantity!!!");
+			$("#discount").val("");
+			discount = 0;
+		}
+		else{
+			$("discount").val(discount);
+		}
+		
+
+		//sum up each total to get sub total
+		$(".amt").each(function() {
+			sub_total += ($(this).html() * 1);
+		});
+		$("#sub_total").val(sub_total);
+
+
+		//calculate GST or 7.5% VAT
+		vat = 0.075 * sub_total;
+		$("#vat").val(vat);
+
+		//calculate net total
+		net_total += (vat + sub_total);
+		net_total = net_total - discount;
+		$("#net_total").val(net_total);
+
+
+
+	}
+
+
+	$("#discount").keyup(function() {
+		const discount = $(this).val();
+		calculate(discount);
+
+	});
+
+
+
+
+	
 
 
 
