@@ -27,7 +27,7 @@ $(document).ready(() => {
 	//this removes the last child when clicked
 	$("#remove").click(function() {
 		$("#invoice_item").children("tr:last").remove();
-		calculate(); //calculate subtotal
+		calculate(0); //calculate subtotal
 	});
 
 
@@ -48,7 +48,7 @@ $(document).ready(() => {
 				tr.find(".qty").val(1);
 				tr.find(".price").val(data["product_price"]);
 				tr.find(".amt").html(tr.find(".qty").val() * tr.find(".price").val());
-				calculate(); //calculate subtotal
+				calculate(0, 0); //calculate subtotal
 
 			}
 		});
@@ -67,13 +67,13 @@ $(document).ready(() => {
 
 		} else {
 			//check if requested quantity > available quantity
-			if ((qty.val() - 0) > (tr.find(".tqty").val() - 0)) {
+			if ((qty.val() * 1) > (tr.find(".tqty").val() - 0)) {
 				alert("Sorry! Your Quantity Request Isn't Available");
 				qty.val(1);
 
 			} else {
 				tr.find(".amt").html(qty.val() * tr.find(".price").val());
-				calculate(); //calculate subtotal
+				calculate(0, 0); //calculate subtotal
 
 			}
 
@@ -84,15 +84,18 @@ $(document).ready(() => {
 
 
 	/////function calculate
-	function calculate(dis) {
+	function calculate(dis, paid) {
 		let sub_total = 0; 
 		let vat = 0;
 		let net_total = 0;
 		let discount = dis;
+		let paid_amt = paid;
+		let due = 0;
 
 		//set dicount value to user's input
-		if ($("#discount").val() == "") {
+		if ($("#discount").val() === "") {
 			discount = 0;
+
 
 		} else if(isNaN($("#discount").val())) {
 			alert("Please Enter a Valid Quantity!!!");
@@ -106,7 +109,7 @@ $(document).ready(() => {
 
 		//sum up each total to get sub total
 		$(".amt").each(function() {
-			sub_total += ($(this).html() * 1);
+			sub_total +=  ($(this).html() * 1);
 		});
 		$("#sub_total").val(sub_total);
 
@@ -121,16 +124,75 @@ $(document).ready(() => {
 		$("#net_total").val(net_total);
 
 
+		//calculate due
+		 due = net_total - paid_amt;
+		 $("#due").val(due);
+
 
 	}
 
-
+	//discount field
 	$("#discount").keyup(function() {
 		const discount = $(this).val();
-		calculate(discount);
+		calculate(discount, 0);
 
 	});
 
+	////paid field
+	$("#paid").keyup(function() {
+		let paid = $(this).val();
+		let discount = $("#discount").val();
+
+		calculate(discount, paid);
+
+	});
+
+
+
+
+
+	////////Process our ORDER FORM
+	$("#order_form").click(function() {
+		const invoice = $("#get_order_data").serialize();
+
+		if ($("#staff_name").val() === "") {
+			$("#staff_name").addClass("border-danger");
+			$("#s_error").html("<span class='text-danger'>Please Enter Staff Name</span>");
+
+		}else if($("#department").val() === ""){
+			$("#department").addClass("border-danger");
+			$("#dept_error").html("<span class='text-danger'>Please Select Department</span>");
+
+		}else if($("#paid").val() === ""){
+			$("#paid").addClass("border-danger");
+			$("#paid_error").html("<span class='text-danger'>Please Enter the Amount Paid</span>");
+
+		}else {
+			$.ajax({
+			url: DOMAIN + "/includes/process.php",
+			method: "POST",
+			data: $("#get_order_data").serialize(),
+			success: function(data) {
+
+				if (data < 0) {
+						alert(data);
+					}else{
+						$("#get_order_data").trigger("reset");
+
+						if (confirm("Do u want to print invoice ?")) {
+							window.open(
+							   DOMAIN+"/includes/invoice_bill.php?invoice_no="+data+"&"+invoice,
+							  '_blank' //  This is what makes it open in a new window.
+							);
+						}
+					}
+				
+			}
+		});
+		}
+
+		
+	});
 
 
 

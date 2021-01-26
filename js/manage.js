@@ -356,4 +356,5 @@ $("#update_product_form").on("submit", function() {
 
 
 
+
 }); 

@@ -384,9 +384,11 @@ if (isset($_POST["getNewOrderItem"])) {
 	        </select>
 	    </td>
 	    <td><input name="tqty[]" readonly type="text" class="form-control form-control-sm tqty"></td>   
-	    <td><input name="qty[]" type="text" class="form-control form-control-sm qty" required></td>
-	    <td><input name="price[]" type="text" class="form-control form-control-sm price" readonly></td>
-	    <span><input name="pro_name[]" type="hidden" class="form-control form-control-sm pro_name"></span>
+	    <td><input name="qty[]" type="text" class="form-control form-control-sm qty" placeholder="Enter Quantity" required="">
+	    	<small id="qty_error" class="form-text text-muted"></small>
+	    </td>
+	    <td><input name="price[]" type="text" class="form-control form-control-sm price" readonly>
+	    <span><input name="pro_name[]" type="hidden" class="form-control form-control-sm pro_name"></span></td>
 	    <td>N <span class="amt">0</span></td>
 	</tr>
 
@@ -406,5 +408,35 @@ if (isset($_POST["getPriceAndQty"])) {
 	echo json_encode($result);
 	exit();
 }
+
+
+/////Process order form
+if (isset($_POST["order_date"]) AND isset($_POST["staff_name"])) {
+	//get form data
+	$order_date = $_POST["order_date"];
+	$staff_name = $_POST["staff_name"];
+	$department = $_POST["department"];
+
+	//getting array variables
+	$ar_tqty = $_POST["tqty"];
+	$ar_qty = $_POST["qty"];
+	$ar_price = $_POST["price"];
+	$ar_pro_name = $_POST["pro_name"];
+
+	//other fields
+	$sub_total = $_POST["sub_total"];
+	$vat = $_POST["vat"];
+	$discount = $_POST["discount"];
+	$net_total = $_POST["net_total"];
+	$paid = $_POST["paid"];
+	$due = $_POST["due"];
+	$payment_type = $_POST["payment_type"];
+
+
+	$m = new Manage();
+	echo $result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_price, $ar_pro_name, $sub_total, $vat, $discount, $net_total, $paid, $due, $payment_type);
+
+}
+
 
  ?>
