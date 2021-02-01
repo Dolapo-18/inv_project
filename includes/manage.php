@@ -175,7 +175,7 @@ private function pagination($con, $table, $pno, $n) {
 
 				//Here we are finding the remaning quantity after giving customer
 				$rem_qty = $ar_tqty[$i] - $ar_qty[$i];
-				if ($rem_qty < 0) {
+				if ($rem_qty <= 0) {
 					return "ORDER_FAIL_TO_COMPLETE";
 				}else{
 					//Update Product stock

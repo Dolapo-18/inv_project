@@ -54,6 +54,7 @@ $(document).ready(() => {
 		});
 
 	});
+	
 
 
 	$("#invoice_item").delegate(".qty", "keyup", function() {
@@ -176,6 +177,10 @@ $(document).ready(() => {
 
 				if (data < 0) {
 						alert(data);
+
+					}else if (data === "ORDER_FAIL_TO_COMPLETE") {
+						alert("Sorry! One of your requests is out of stock");
+
 					}else{
 						$("#get_order_data").trigger("reset");
 
