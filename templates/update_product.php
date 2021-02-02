@@ -14,6 +14,9 @@
               <div class="form-group col-md-6">
                 <label>Date</label>
                 <input type="hidden" name="product_id" id="product_id" value="">
+                <input type="hidden" name="last_date_added" id="last_date_added" value="">
+                <input type="hidden" name="last_product_stock" id="last_product_stock" value="">
+
                 <input type="text" class="form-control form-control-sm" id="added_date" name="added_date" value="<?php echo date("Y-m-d"); ?>" readonly>
               </div>
 

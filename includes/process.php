@@ -336,18 +336,27 @@ if (isset($_POST["new_product_name"])) {
 	//fields
 
 	$id = $_POST["product_id"]; //retrieved from our update_product.php form
+	$last_date_added = $_POST["last_date_added"]; //retrieved from our update_product.php form
+	$added_date = $_POST["added_date"]; //retrieved from our update_product.php form
+	$last_product_stock = $_POST["last_product_stock"]; //retrieved from our update_product.php form
+
+
 	$new_product_name = $_POST["new_product_name"];
 	$new_category_name = $_POST["new_category_name"];
 	$new_brand = $_POST["new_brand_name"];
 	$new_product_price = $_POST["new_product_price"];
 	$new_product_stock = $_POST["new_product_stock"];
+	$total_product_stock  = ($last_product_stock + $new_product_stock);
 	
 	$result = $m->updateRecord("products", ["product_id"=>$id],
 	 ["cat_id"=>$new_category_name,
+	 "last_date_added"=>$last_date_added,
+	 "added_date"=>$added_date,
 	 "brand_id"=>$new_brand,
 	 "product_name"=>$new_product_name,
 	 "product_price"=>$new_product_price,
-	 "product_stock"=>$new_product_stock,
+	 "new_product_added"=>$new_product_stock,
+	 "product_stock"=>$total_product_stock,
 	 "p_status"=>1]);
 	echo $result;
 	exit();

@@ -309,13 +309,16 @@ $("#update_brand_form").on("submit", function() {
 			success: function(data) {
 				
 				$("#product_id").val(data["product_id"]);
+				$("#last_date_added").val(data["added_date"]);
+				$("#last_product_stock").val(data["product_stock"]);
+
 				$("#update_product_name").val(data["product_name"]);
 				$("#update_category_name").val(data["cat_id"]);
 				$("#update_brand_name").val(data["brand_id"]);
 				$("#update_product_price").val(data["product_price"]);
 				$("#update_product_stock").val(data["product_stock"]);
 
-				
+				//alert($("#last_product_stock").val());
 
 			} 
 		});
