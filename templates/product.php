@@ -47,7 +47,7 @@
             
               <div class="form-group">
                 <label>Product Price</label>
-                <input type="text" class="form-control form-control-sm" id="product_price" name="product_price">
+                <input type="text" class="form-control form-control-sm" id="product_price" name="product_price" placeholder="Total product price" autocomplete="off">
                 <small id="price_error" class="form-text text-muted"></small>
 
               </div>

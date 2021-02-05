@@ -316,7 +316,7 @@ $("#update_brand_form").on("submit", function() {
 				$("#update_category_name").val(data["cat_id"]);
 				$("#update_brand_name").val(data["brand_id"]);
 				$("#update_product_price").val(data["product_price"]);
-				$("#update_product_stock").val(data["product_stock"]);
+				$("#update_product_stock").val(0);
 
 				//alert($("#last_product_stock").val());
 
@@ -327,7 +327,7 @@ $("#update_brand_form").on("submit", function() {
 
 
 
-////////////////////Update Brand
+////////////////////Update Product
 $("#update_product_form").on("submit", function() {
 	if ($("#update_product_name").val() == "") {
 			$("#update_product_name").addClass("border-danger");
@@ -339,6 +339,7 @@ $("#update_product_form").on("submit", function() {
 				method : "POST",
 				data  : $("#update_product_form").serialize(),
 				success : function(data){
+
 					if (data === "UPDATED") {
 						$("#p_error").html("<span class='text-success'><b>Product Updated Successfully!!!</b></span>");
 					manageProduct(1);
@@ -348,7 +349,7 @@ $("#update_product_form").on("submit", function() {
 					}, 1000);
 
 					} else {
-						alert(data);
+						//alert(data);
 					}
 					
 				}

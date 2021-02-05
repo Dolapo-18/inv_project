@@ -27,7 +27,7 @@ $(document).ready(() => {
 	//this removes the last child when clicked
 	$("#remove").click(function() {
 		$("#invoice_item").children("tr:last").remove();
-		calculate(0); //calculate subtotal
+		//calculate(0); //calculate subtotal
 	});
 
 
@@ -46,9 +46,9 @@ $(document).ready(() => {
 				tr.find(".tqty").val(data["product_stock"]);
 				tr.find(".pro_name").val(data["product_name"]);
 				tr.find(".qty").val(1);
-				tr.find(".price").val(data["product_price"]);
-				tr.find(".amt").html(tr.find(".qty").val() * tr.find(".price").val());
-				calculate(0, 0); //calculate subtotal
+				// tr.find(".price").val(data["product_price"]);
+				// tr.find(".amt").html(tr.find(".qty").val() * tr.find(".price").val());
+				//calculate(0, 0); //calculate subtotal
 
 			}
 		});
@@ -74,7 +74,7 @@ $(document).ready(() => {
 
 			} else {
 				tr.find(".amt").html(qty.val() * tr.find(".price").val());
-				calculate(0, 0); //calculate subtotal
+				//calculate(0, 0); //calculate subtotal
 
 			}
 
@@ -85,68 +85,68 @@ $(document).ready(() => {
 
 
 	/////function calculate
-	function calculate(dis, paid) {
-		let sub_total = 0; 
-		let vat = 0;
-		let net_total = 0;
-		let discount = dis;
-		let paid_amt = paid;
-		let due = 0;
+	// function calculate(dis, paid) {
+	// 	let sub_total = 0; 
+	// 	let vat = 0;
+	// 	let net_total = 0;
+	// 	let discount = dis;
+	// 	let paid_amt = paid;
+	// 	let due = 0;
 
-		//set dicount value to user's input
-		if ($("#discount").val() === "") {
-			discount = 0;
+	// 	//set dicount value to user's input
+	// 	if ($("#discount").val() === "") {
+	// 		discount = 0;
 
 
-		} else if(isNaN($("#discount").val())) {
-			alert("Please Enter a Valid Quantity!!!");
-			$("#discount").val("");
-			discount = 0;
-		}
-		else{
-			$("discount").val(discount);
-		}
+	// 	} else if(isNaN($("#discount").val())) {
+	// 		alert("Please Enter a Valid Quantity!!!");
+	// 		$("#discount").val("");
+	// 		discount = 0;
+	// 	}
+	// 	else{
+	// 		$("discount").val(discount);
+	// 	}
 		
 
-		//sum up each total to get sub total
-		$(".amt").each(function() {
-			sub_total +=  ($(this).html() * 1);
-		});
-		$("#sub_total").val(sub_total);
+	// 	//sum up each total to get sub total
+	// 	$(".amt").each(function() {
+	// 		sub_total +=  ($(this).html() * 1);
+	// 	});
+	// 	$("#sub_total").val(sub_total);
 
 
-		//calculate GST or 7.5% VAT
-		vat = 0.075 * sub_total;
-		$("#vat").val(vat);
+	// 	//calculate GST or 7.5% VAT
+	// 	vat = 0.075 * sub_total;
+	// 	$("#vat").val(vat);
 
-		//calculate net total
-		net_total += (vat + sub_total);
-		net_total = net_total - discount;
-		$("#net_total").val(net_total);
-
-
-		//calculate due
-		 due = net_total - paid_amt;
-		 $("#due").val(due);
+	// 	//calculate net total
+	// 	net_total += (vat + sub_total);
+	// 	net_total = net_total - discount;
+	// 	$("#net_total").val(net_total);
 
 
-	}
+	// 	//calculate due
+	// 	 due = net_total - paid_amt;
+	// 	 $("#due").val(due);
 
-	//discount field
-	$("#discount").keyup(function() {
-		const discount = $(this).val();
-		calculate(discount, 0);
 
-	});
+	// }
 
-	////paid field
-	$("#paid").keyup(function() {
-		let paid = $(this).val();
-		let discount = $("#discount").val();
+	// //discount field
+	// $("#discount").keyup(function() {
+	// 	const discount = $(this).val();
+	// 	calculate(discount, 0);
 
-		calculate(discount, paid);
+	// });
 
-	});
+	// ////paid field
+	// $("#paid").keyup(function() {
+	// 	let paid = $(this).val();
+	// 	let discount = $("#discount").val();
+
+	// 	calculate(discount, paid);
+
+	// });
 
 
 
@@ -164,9 +164,13 @@ $(document).ready(() => {
 			$("#department").addClass("border-danger");
 			$("#dept_error").html("<span class='text-danger'>Please Select Department</span>");
 
-		}else if($("#paid").val() === ""){
-			$("#paid").addClass("border-danger");
-			$("#paid_error").html("<span class='text-danger'>Please Enter the Amount Paid</span>");
+		}else if($("#product_name").val() === "") {
+			$("#product_name").addClass("border-danger");
+			$("#p_error").html("<span class='text-danger'>Please Select a Product</span>");
+
+		}else if($("#qty").val() === "") {
+			$("#qty").addClass("border-danger");
+			$("#qty_error").html("<span class='text-danger'>Please Enter Quantity</span>");
 
 		}else {
 			$.ajax({
@@ -183,6 +187,7 @@ $(document).ready(() => {
 
 					}else{
 						$("#get_order_data").trigger("reset");
+						$("#amt").html("0");
 
 						if (confirm("Do u want to print invoice ?")) {
 							window.open(

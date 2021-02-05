@@ -24,7 +24,7 @@ h2 {
   font-size: 20px; }
 
 .half, .half .container > .row {
-  height: 110vh;
+  height: 120vh;
   min-height: 600px; }
 
 .half .contents {
@@ -35,7 +35,7 @@ h2 {
   @media (max-width: 767.98px) {
     .half .bg {
       width: 100%;
-      height: 250px; } }
+      height: 200px; } }
 
 .half .contents {
   width: 75%; }
@@ -46,7 +46,7 @@ h2 {
 .half .contents .form-control, .half .bg .form-control {
   border: none;
   border-radius: 0px;
-  height: 54px;
+  height: 30px;
   background: #efefef; }
   .half .contents .form-control:active, .half .contents .form-control:focus, .half .bg .form-control:active, .half .bg .form-control:focus {
     outline: none;

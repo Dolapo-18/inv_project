@@ -3,6 +3,8 @@
 	include_once("./database/constants.php");
 	if (!isset($_SESSION["user_id"])) {
 		header("location:". DOMAIN."/");
+	} else {
+		$username = $_SESSION['username'];
 	}
 
  ?>
@@ -46,6 +48,7 @@
 			  <div class="card-body">
 			    <form id="get_order_data" action="" onsubmit="return false;">
 			    	<div class="form-group row">
+			    		 
 			    		<label for="" class="col-sm-3 col-form-label" align="right">Order Date</label>
 			    		<div class="col-sm-6">
 			    			<input type="text" readonly="" id="order_date" name="order_date" class="form-control form-control-sm" value="<?php echo date("Y-m-d");?>">
@@ -63,8 +66,19 @@
 					    <div class="form-group col-md-4">
 					       <select name="department" class="form-control form-control-sm" id="department">
 				              <option value="">---Select Department---</option>
-				              <option value="Admin">Admin</option>
-				              <option value="IT">IT</option>
+				              <option value="Admin">Administration</option>
+				              <option value="Corporate Affairs">Corporate Affairs</option>
+				              <option value="Customer Service">Customer Service</option>
+				              <option value="ERM & Compliance">ERM & Compliance</option>
+				              <option value="Executive">Executive</option>
+				              <option value="Finance">Finance</option>
+				              <option value="Human Capital">Human Capital</option>
+				              <option value="Internal Audit">Internal Audit</option>
+				              <option value="Legal">Legal</option>
+				              <option value="Marketing">Marketing</option>
+				              <option value="Oil & Gas">Oil & Gas</option>
+				              <option value="Strategy">Strategy</option>
+				              <option value="Technical">Technical</option>
 				            </select>
 				            <small id="dept_error" class="form-text text-muted"></small>
 					    </div>
@@ -80,8 +94,8 @@
 		                                <th style="text-align:center;">Item Name</th>
 		                                <th style="text-align:center;">Total Quantity</th>
 		                                <th style="text-align:center;">Quantity</th>
-		                                <th style="text-align:center;">Unit Price</th>
-		                                <th>Total</th>
+		                                <!-- <th style="text-align:center;">Unit Price</th>
+		                                <th>Total</th> -->
 		                              </tr>
 		                            </thead>
 		                            <tbody id="invoice_item">
@@ -109,7 +123,7 @@
 
 
 			    		<p></p>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                       <label for="sub_total" class="col-sm-3 col-form-label" align="right">Sub Total</label>
                       <div class="col-sm-6">
                         <input type="text" readonly name="sub_total" class="form-control form-control-sm" id="sub_total" required/>
@@ -145,21 +159,19 @@
                       <div class="col-sm-6">
                         <input type="text" readonly name="due" class="form-control form-control-sm" id="due" required/>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="form-group row">
-                      <label for="payment_type" class="col-sm-3 col-form-label" align="right">Payment Method</label>
+                      <label for="payment_type" class="col-sm-3 col-form-label" align="right">Request Method</label>
                       <div class="col-sm-6">
                         <select name="payment_type" class="form-control form-control-sm" id="payment_type" required/>
-                          <option>Cash</option>
-                          <option>Card</option>
-                          <option>Draft</option>
-                          <option>Cheque</option>
+                          <option>Online</option>
+                          <option>Manual</option>
                         </select>
                       </div>
                     </div>
 
                     <center>
-                      <input type="submit" id="order_form" style="width:150px;" class="btn btn-info" value="Order">
+                      <input type="submit" id="order_form" style="width:150px;" class="btn btn-info" value="Order" style="">
                       <input type="submit" id="print_invoice" style="width:150px;" class="btn btn-success d-none" value="Print Invoice">
                     </center>
 

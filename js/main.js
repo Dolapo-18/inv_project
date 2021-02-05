@@ -156,6 +156,8 @@ $(document).ready(function() {
 						log_email.addClass("border-danger");
 						$("#e_error").html("<span class='text-danger'><b>Sorry! You Haven't Registered Yet.</b></span>");
 
+						
+
 					} else if( data === "PASSWORD_MISMATCH_ERROR") {
 						$(".overlay").hide();
 						log_password.addClass("border-danger");
@@ -345,28 +347,28 @@ $(document).ready(function() {
 		}
 
 		if (status) {
+
 			$.ajax({
-				url: DOMAIN + "/includes/process.php",
-				method: "POST",
-				data: $("#product_form").serialize(),
-				success: function(data) {
-
-					if (data === "PRODUCT_ADDED") {
-						$("#product_name").val("");
-						$("#product_price").val("");
-						$("#product_stock").val("");
+				url : DOMAIN+"/includes/process.php",
+				method : "POST",
+				data : $("#product_form").serialize(),
+				success : function(data){
+					if (data == "PRODUCT_ADDED") {
 						$("#product_report").html("<span class='text-success'><b>New Product Added Successfully!!!</b></span>");
-						
-						
+						$("#product_name").val("");
+						$("#select_cat").val("");
+						$("#select_brand").val("");
+						$("#product_price").val("");
+						$("#product_qty").val("");
 
-					} else {
+					}else{
 						$("#product_report").html("<span class='text-danger'><b>Sorry, Product Name Already Exist!!!</b></span>");
-						product_name.addClass("border-danger");
-						
+					    $("#product_name").addClass("border-danger");
 					}
+						
 				}
-
 			});
+			
 		}
 	});
 

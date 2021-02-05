@@ -59,6 +59,20 @@ class DBOperation {
 	}
 
 
+	//this function adds certain fields to the "stocks" table when user adds new product or update product in order to keep track on what was added and when it was added and qty added.
+	public function add_stock($product_name, $added_date, $product_stock) {
+		$pre_stmt = $this->con->prepare("INSERT INTO `stocks`(`product_name`, `added_date`, `product_stock`) VALUES (?,?,?)");
+		$pre_stmt->bind_param("ssi", $product_name, $added_date, $product_stock);
+		$result = $pre_stmt->execute() or die($this->con->error);
+
+		// if ($result) {
+		// 	return "PRODUCT_ADDED";
+		// } else {
+		// 	return "SOMETHING_WENT_WRONG";
+		// }
+	}
+
+
 
 	public function getAllRecords($table) {
 		$pre_stmt = $this->con->prepare("SELECT * FROM " . $table);

@@ -1,10 +1,17 @@
 <?php 
 
 	include_once("../fpdf/fpdf.php");
+	include_once("../database/constants.php");
+
+	if (!isset($_SESSION["user_id"])) {
+		header("location:". DOMAIN."/");
+	} else {
+		$username = $_SESSION['username'];
+	}
 
 	if ($_GET["order_date"] && $_GET["invoice_no"]) {
 		
-		$invoice_no = $_GET["invoice_no"];
+		$invoice_no = "LNK" . $_GET["invoice_no"];
 
 		//create an object of the PDF library 
 		$pdf = new FPDF();
@@ -22,7 +29,7 @@
 		$pdf->SetFont('Arial','',11);
 
 		$pdf->Cell(160,10,'Invoice No:',0,0, "R");
-		$pdf->Cell(40,10,$_GET["invoice_no"],0,1);
+		$pdf->Cell(40,10,$invoice_no,0,1);
 
 		$pdf->Cell(30,10,'Order Date:',0,0);
 		$pdf->Cell(40,10,$_GET["order_date"],0,1);
@@ -67,7 +74,7 @@
 		$pdf->Cell(50,10,": ".$_GET["paid"],0,1);
 		$pdf->Cell(50,10,"Due Amount",0,0);
 		$pdf->Cell(50,10,": ".$_GET["due"],0,1);
-		$pdf->Cell(50,10,"Payment Type",0,0);
+		$pdf->Cell(50,10,"Request Type",0,0);
 		$pdf->Cell(50,10,": ".$_GET["payment_type"],0,1);
 
 
@@ -76,10 +83,10 @@
 		
 
 		$pdf->Cell(140,10,'Issued By:',0,0, "R");
-		$pdf->Cell(40,10,'Progress Ikobho',0,1);
+		$pdf->Cell(40,10,$username,0,1);
 		// $pdf->Cell(180,10,"Signature",0,0,"R");
 
-		$pdf->Output("../PDF_INVOICE/PDF_INVOICE_".$_GET["invoice_no"].".pdf","F");
+		$pdf->Output("../PDF_INVOICE/PDF_INVOICE_".$invoice_no.".pdf","F");
 
 		$pdf->Output();
 	}

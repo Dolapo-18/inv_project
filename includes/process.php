@@ -71,7 +71,7 @@ if (isset($_POST["brand_name"])) {
 }
 
 
-//////For Add Product
+//////For Add Product and stock
 if (isset($_POST["cat_id"]) 
 	&& isset($_POST["brand_id"]) 
 	&& isset($_POST["product_name"]) 
@@ -80,6 +80,7 @@ if (isset($_POST["cat_id"])
 	&& isset($_POST["added_date"])) {
 	//create an object of DBOperation class
 	$obj = new DBOperation();
+
 	$result = $obj->addProduct(
 	 $_POST["cat_id"],
 	 $_POST["brand_id"], 
@@ -87,9 +88,32 @@ if (isset($_POST["cat_id"])
 	 $_POST["product_price"], 
 	 $_POST["product_stock"], 
 	 $_POST["added_date"]);
+
+	//add stock
+	$obj2 = new DBOperation();
+	$result2 = $obj2->add_stock(
+		 $_POST["product_name"],
+		  $_POST["added_date"],
+		  $_POST["product_stock"]
+	);
 	echo $result;
+	//echo $result2;
 	exit();
 }
+
+
+// ////For Add Stock
+// if (isset($_POST["product_name"])) {
+
+// 	//create an object of DBOperation
+// 	$obj = new DBOperation();
+// 	$result = $obj->add_stock($_POST["product_name"],
+// 		$_POST["added_date"], 
+// 		 $_POST["product_stock"]);
+// 	echo $result;
+// 	exit();
+// 	# code...
+// }
 
 
 
@@ -332,6 +356,7 @@ if (isset($_POST["updateProduct"])) {
 if (isset($_POST["new_product_name"])) {
 	//create an object of DBOperation class
 	$m = new Manage();
+	$obj = new DBOperation();
 
 	//fields
 
@@ -346,7 +371,14 @@ if (isset($_POST["new_product_name"])) {
 	$new_brand = $_POST["new_brand_name"];
 	$new_product_price = $_POST["new_product_price"];
 	$new_product_stock = $_POST["new_product_stock"];
-	$total_product_stock  = ($last_product_stock + $new_product_stock);
+
+	if ($last_product_stock === 0) {
+		$total_product_stock = $last_product_stock + 0;
+
+	} else {
+		$total_product_stock  = ($last_product_stock + $new_product_stock);
+	}
+	
 	
 	$result = $m->updateRecord("products", ["product_id"=>$id],
 	 ["cat_id"=>$new_category_name,
@@ -358,6 +390,15 @@ if (isset($_POST["new_product_name"])) {
 	 "new_product_added"=>$new_product_stock,
 	 "product_stock"=>$total_product_stock,
 	 "p_status"=>1]);
+
+	//add updated products to "stocks" table
+	$result2 = $obj->add_stock(
+		$new_product_name,
+		$added_date,
+		$new_product_stock
+
+	);
+	//echo $result2;
 	echo $result;
 	exit();
 }
@@ -378,7 +419,7 @@ if (isset($_POST["getNewOrderItem"])) {
 	<tr>
 	    <td><b class="number"></b></td>
 	    <td>
-	        <select name="pid[]" class="form-control form-control-sm pid" required>
+	        <select name="pid[]" class="form-control form-control-sm pid" id="product_name" required>
 	        	<option value="">---Select Product---</option>
 	            <?php 
 	            	foreach ($rows as $row) {
@@ -391,14 +432,15 @@ if (isset($_POST["getNewOrderItem"])) {
 	             ?>
 
 	        </select>
+	        <small id="p_error" class="form-text text-muted"></small>
 	    </td>
 	    <td><input name="tqty[]" readonly type="text" class="form-control form-control-sm tqty"></td>   
-	    <td><input name="qty[]" type="text" class="form-control form-control-sm qty" placeholder="Enter Quantity" required="">
+	    <td><input name="qty[]" type="text" class="form-control form-control-sm qty" placeholder="Enter Quantity" id="qty">
 	    	<small id="qty_error" class="form-text text-muted"></small>
 	    </td>
-	    <td><input name="price[]" type="text" class="form-control form-control-sm price" readonly>
+	    <td><!--<input name="price[]" type="text" class="form-control form-control-sm price" readonly> -->
 	    <span><input name="pro_name[]" type="hidden" class="form-control form-control-sm pro_name"></span></td>
-	    <td>N <span class="amt">0</span></td>
+	    <td><!-- N <span class="amt" id="amt">0</span> --></td>
 	</tr>
 
 	<?php
