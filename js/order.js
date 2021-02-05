@@ -36,7 +36,8 @@ $(document).ready(() => {
 		const pid = $(this).val(); //retrieve the id of selected product
 		const tr = $(this).parent().parent(); //get the parent of the selected product
 
-		//$(".overlay").show();
+
+			//$(".overlay").show();
 		$.ajax({
 			url: DOMAIN + "/includes/process.php",
 			method: "POST",
@@ -52,6 +53,9 @@ $(document).ready(() => {
 
 			}
 		});
+	
+
+		
 
 	});
 	
@@ -66,11 +70,15 @@ $(document).ready(() => {
 			alert("Please Enter a Valid Quantity!!!");
 			qty.val(1);
 
-		} else {
+		} else if(qty.val() === "") {
+			alert("Please Enter a Quantity Value!!!");
+			qty.val(1);
+		}
+		else {
 			//check if requested quantity > available quantity
 			if ((qty.val() * 1) > (tr.find(".tqty").val() - 0)) {
 				alert("Sorry! Your Quantity Request Isn't Available");
-				qty.val(1);
+				qty.val(0);
 
 			} else {
 				tr.find(".amt").html(qty.val() * tr.find(".price").val());
@@ -178,16 +186,18 @@ $(document).ready(() => {
 			method: "POST",
 			data: $("#get_order_data").serialize(),
 			success: function(data) {
-
+				
 				if (data < 0) {
 						alert(data);
 
 					}else if (data === "ORDER_FAIL_TO_COMPLETE") {
 						alert("Sorry! One of your requests is out of stock");
 
+					// }else if(data === "DUPLICATE_REQUEST") {
+					// 	alert("Duplicate Request");
 					}else{
 						$("#get_order_data").trigger("reset");
-						$("#amt").html("0");
+						window.location.href = "";
 
 						if (confirm("Do u want to print invoice ?")) {
 							window.open(

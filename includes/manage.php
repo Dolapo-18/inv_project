@@ -162,10 +162,10 @@ private function pagination($con, $table, $pno, $n) {
 
 
 	 /////////Process staff order
-	 public function storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_price, $ar_pro_name, $sub_total, $vat, $discount, $net_total, $paid, $due, $payment_type) {
+	 public function storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type) {
 	 	
-	 	$pre_stmt = $this->con->prepare("INSERT INTO `invoice`(`order_date`, `staff_name`, `department`, `sub_total`, `vat`, `discount`, `net_total`, `paid`, `due`, `payment_type`) VALUES (?,?,?,?,?,?,?,?,?,?)");
-		$pre_stmt->bind_param("sssdddddds", $order_date, $staff_name, $department, $sub_total, $vat, $discount, $net_total, $paid, $due, $payment_type);
+	 	$pre_stmt = $this->con->prepare("INSERT INTO `invoice`(`order_date`, `staff_name`, `department`, `payment_type`) VALUES (?,?,?,?)");
+		$pre_stmt->bind_param("ssss", $order_date, $staff_name, $department, $payment_type);
 		$pre_stmt->execute() or die($this->con->error);
 
 		//get the last ID of the table
@@ -177,6 +177,10 @@ private function pagination($con, $table, $pno, $n) {
 				$rem_qty = $ar_tqty[$i] - $ar_qty[$i];
 				if ($rem_qty <= 0) {
 					return "ORDER_FAIL_TO_COMPLETE";
+
+				// } else if($ar_pro_name[$i] === $ar_pro_name[2]) {
+				// 	return "DUPLICATE_REQUEST";
+
 				}else{
 					//Update Product stock
 					$sql = "UPDATE products SET product_stock = '$rem_qty' WHERE product_name = '".$ar_pro_name[$i]."'";
@@ -184,9 +188,9 @@ private function pagination($con, $table, $pno, $n) {
 				}
 
 
-				$insert_product = $this->con->prepare("INSERT INTO `invoice_details`(`invoice_no`, `product_name`, `price`, `qty`)
-				 VALUES (?,?,?,?)");
-				$insert_product->bind_param("isdd",$invoice_no,$ar_pro_name[$i],$ar_price[$i],$ar_qty[$i]);
+				$insert_product = $this->con->prepare("INSERT INTO `invoice_details`(`invoice_no`, `product_name`, `qty`)
+				 VALUES (?,?,?)");
+				$insert_product->bind_param("isd",$invoice_no, $ar_pro_name[$i], $ar_qty[$i]);
 				$insert_product->execute() or die($this->con->error);
 			}
 

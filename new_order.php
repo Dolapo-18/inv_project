@@ -73,6 +73,7 @@
 				              <option value="Executive">Executive</option>
 				              <option value="Finance">Finance</option>
 				              <option value="Human Capital">Human Capital</option>
+				              <option value="IT">IT</option>
 				              <option value="Internal Audit">Internal Audit</option>
 				              <option value="Legal">Legal</option>
 				              <option value="Marketing">Marketing</option>

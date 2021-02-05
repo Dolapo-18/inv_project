@@ -419,7 +419,7 @@ if (isset($_POST["getNewOrderItem"])) {
 	<tr>
 	    <td><b class="number"></b></td>
 	    <td>
-	        <select name="pid[]" class="form-control form-control-sm pid" id="product_name" required>
+	        <select name="pid[]" class="form-control form-control-sm pid" id="" required>
 	        	<option value="">---Select Product---</option>
 	            <?php 
 	            	foreach ($rows as $row) {
@@ -435,7 +435,7 @@ if (isset($_POST["getNewOrderItem"])) {
 	        <small id="p_error" class="form-text text-muted"></small>
 	    </td>
 	    <td><input name="tqty[]" readonly type="text" class="form-control form-control-sm tqty"></td>   
-	    <td><input name="qty[]" type="text" class="form-control form-control-sm qty" placeholder="Enter Quantity" id="qty">
+	    <td><input name="qty[]" type="text" class="form-control form-control-sm qty" placeholder="Enter Quantity" id="">
 	    	<small id="qty_error" class="form-text text-muted"></small>
 	    </td>
 	    <td><!--<input name="price[]" type="text" class="form-control form-control-sm price" readonly> -->
@@ -471,21 +471,21 @@ if (isset($_POST["order_date"]) AND isset($_POST["staff_name"])) {
 	//getting array variables
 	$ar_tqty = $_POST["tqty"];
 	$ar_qty = $_POST["qty"];
-	$ar_price = $_POST["price"];
+	// $ar_price = $_POST["price"];
 	$ar_pro_name = $_POST["pro_name"];
 
-	//other fields
-	$sub_total = $_POST["sub_total"];
-	$vat = $_POST["vat"];
-	$discount = $_POST["discount"];
-	$net_total = $_POST["net_total"];
-	$paid = $_POST["paid"];
-	$due = $_POST["due"];
+	// //other fields
+	// $sub_total = $_POST["sub_total"];
+	// $vat = $_POST["vat"];
+	// $discount = $_POST["discount"];
+	// $net_total = $_POST["net_total"];
+	// $paid = $_POST["paid"];
+	// $due = $_POST["due"];
 	$payment_type = $_POST["payment_type"];
 
 
 	$m = new Manage();
-	echo $result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_price, $ar_pro_name, $sub_total, $vat, $discount, $net_total, $paid, $due, $payment_type);
+	echo $result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type);
 
 }
 
