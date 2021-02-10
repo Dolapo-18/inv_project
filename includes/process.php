@@ -483,9 +483,17 @@ if (isset($_POST["order_date"]) AND isset($_POST["staff_name"])) {
 	// $due = $_POST["due"];
 	$payment_type = $_POST["payment_type"];
 
-
-	$m = new Manage();
-	echo $result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type);
+	
+		$m = new Manage();
+		
+		$result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type);
+		echo json_encode($result);
+	
+	    //$result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type);
+		
+	   //echo json_encode($result);
+	
+	
 
 }
 

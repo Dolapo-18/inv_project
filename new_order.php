@@ -162,7 +162,7 @@
                       </div>
                     </div> -->
                     <div class="form-group row">
-                      <label for="payment_type" class="col-sm-3 col-form-label" align="right">Request Method</label>
+                      <label for="payment_type" class="col-sm-3 col-form-label" align="right">Request Method:</label>
                       <div class="col-sm-6">
                         <select name="payment_type" class="form-control form-control-sm" id="payment_type" required/>
                           <option>Online</option>

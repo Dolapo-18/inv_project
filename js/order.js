@@ -34,6 +34,7 @@ $(document).ready(() => {
 	//change/fetch quantity if user changes input- product name
 	$("#invoice_item").delegate(".pid", "change", function() {
 		const pid = $(this).val(); //retrieve the id of selected product
+		const tqty = $("#tqty").val();
 		const tr = $(this).parent().parent(); //get the parent of the selected product
 
 
@@ -47,6 +48,13 @@ $(document).ready(() => {
 				tr.find(".tqty").val(data["product_stock"]);
 				tr.find(".pro_name").val(data["product_name"]);
 				tr.find(".qty").val(1);
+				
+					let total = ($(".tqty").val());
+					if (((total * 1) > 0) && ((total * 1) <= 3)) {
+						alert("Warning!!! A product is running out of stock.");
+					}
+				
+				
 				// tr.find(".price").val(data["product_price"]);
 				// tr.find(".amt").html(tr.find(".qty").val() * tr.find(".price").val());
 				//calculate(0, 0); //calculate subtotal
@@ -72,7 +80,7 @@ $(document).ready(() => {
 
 		} else if(qty.val() === "") {
 			alert("Please Enter a Quantity Value!!!");
-			qty.val(1);
+			//qty.val(1);
 		}
 		else {
 			//check if requested quantity > available quantity
@@ -186,26 +194,41 @@ $(document).ready(() => {
 			method: "POST",
 			data: $("#get_order_data").serialize(),
 			success: function(data) {
-				
-				if (data < 0) {
-						alert(data);
+				let invoice_no;
+					if (data === '["NO","YES"]') {
+						alert("Can't process");
 
-					}else if (data === "ORDER_FAIL_TO_COMPLETE") {
-						alert("Sorry! One of your requests is out of stock");
+					 } else if (data = '["YES"]') {
+						invoice_no = Math.floor((Math.random() * 10) + 1);
+						alert("LNK" + invoice_no);
+					 } 
 
-					// }else if(data === "DUPLICATE_REQUEST") {
-					// 	alert("Duplicate Request");
-					}else{
-						$("#get_order_data").trigger("reset");
-						window.location.href = "";
+					
 
-						if (confirm("Do u want to print invoice ?")) {
-							window.open(
-							   DOMAIN+"/includes/invoice_bill.php?invoice_no="+data+"&"+invoice,
-							  '_blank' //  This is what makes it open in a new window.
-							);
-						}
-					}
+					// if (data === "OUT_OF_STOCK") {
+					// 	alert("A product is out of stock");
+					// }
+
+					//  if(data === "ORDER_FAIL_TO_COMPLETE") {
+					// 	alert("Sorry! One of your requests is out of stock");
+
+					// } else if (data === "CANNOT_PROCESS_ORDER") {
+					// 	alert("Sorry! One of your requests is out of stock");
+					// }
+					// else{
+					// 	$("#get_order_data").trigger("reset");
+
+					// 	// if (confirm("Do u want to print invoice ?")) {
+					// 		alert("Order Successful, Click OK to print Invoice");
+				 // 			window.open(
+				 // 			   DOMAIN+"/includes/invoice_bill.php?invoice_no="+data+"&"+invoice,
+					// 		  '_blank' //  This is what makes it open in a new window.
+				 // 			);
+					// 	//}
+
+
+					// }
+
 				
 			}
 		});

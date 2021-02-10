@@ -158,34 +158,50 @@ private function pagination($con, $table, $pno, $n) {
 
 	 }
 
+	
+
 
 
 
 	 /////////Process staff order
 	 public function storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type) {
-	 	
-	 	$pre_stmt = $this->con->prepare("INSERT INTO `invoice`(`order_date`, `staff_name`, `department`, `payment_type`) VALUES (?,?,?,?)");
-		$pre_stmt->bind_param("ssss", $order_date, $staff_name, $department, $payment_type);
-		$pre_stmt->execute() or die($this->con->error);
 
-		//get the last ID of the table
-		$invoice_no = $pre_stmt->insert_id;
-		if ($invoice_no != null) {
-			for ($i=0; $i < count($ar_pro_name); $i++) {
+	
+	 	$response = [];
+
+	 	if (in_array(0, $ar_tqty)) {
+	 		array_push($response, "NO");
+	 		
+	 	} 
+
+ 		if (max(array($ar_tqty)) > 0) {
+ 			array_push($response, "YES");
+ 		}
+	 	
+	 	if ($response[0] === "NO" && $response[1] === "YES") {
+	 		return $response;
+
+	 	 } else if ($response[0] === "YES" ){
+
+	 		$pre_stmt = $this->con->prepare("INSERT INTO `invoice`(`order_date`, `staff_name`, `department`, `payment_type`) VALUES (?,?,?,?)");
+		    $pre_stmt->bind_param("ssss", $order_date, $staff_name, $department, $payment_type);
+		    $pre_stmt->execute() or die($this->con->error);
+
+		    $invoice_no = $pre_stmt->insert_id;
+		    for ($i=0; $i < count($ar_pro_name); $i++) {
 
 				//Here we are finding the remaning quantity after giving customer
 				$rem_qty = $ar_tqty[$i] - $ar_qty[$i];
-				if ($rem_qty <= 0) {
+				if ($rem_qty < 0) {
 					return "ORDER_FAIL_TO_COMPLETE";
 
-				// } else if($ar_pro_name[$i] === $ar_pro_name[2]) {
-				// 	return "DUPLICATE_REQUEST";
 
 				}else{
 					//Update Product stock
 					$sql = "UPDATE products SET product_stock = '$rem_qty' WHERE product_name = '".$ar_pro_name[$i]."'";
 					$this->con->query($sql);
 				}
+				
 
 
 				$insert_product = $this->con->prepare("INSERT INTO `invoice_details`(`invoice_no`, `product_name`, `qty`)
@@ -194,12 +210,11 @@ private function pagination($con, $table, $pno, $n) {
 				$insert_product->execute() or die($this->con->error);
 			}
 
-			return $invoice_no;
-		}
-		
 
 
+	 	 	return $response;
 
+	 	 }
 	 }
 
 
