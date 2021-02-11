@@ -462,7 +462,7 @@ if (isset($_POST["getPriceAndQty"])) {
 
 
 /////Process order form
-if (isset($_POST["order_date"]) AND isset($_POST["staff_name"])) {
+if (isset($_POST["order_date"]) AND isset($_POST["staff_name"]) AND isset($_POST["pro_name"])) {
 	//get form data
 	$order_date = $_POST["order_date"];
 	$staff_name = $_POST["staff_name"];
@@ -485,6 +485,7 @@ if (isset($_POST["order_date"]) AND isset($_POST["staff_name"])) {
 
 	
 		$m = new Manage();
+
 		
 		$result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type);
 		echo json_encode($result);

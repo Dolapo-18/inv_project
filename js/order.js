@@ -99,6 +99,16 @@ $(document).ready(() => {
 	});
 
 
+	// $("#invoice_item").delegate(".qty", "change", function() {
+	// 	let qty = $(this);
+	// 	let tr = $(this).parent().parent();
+
+	// 	if (qty.val() === "") {
+	// 		alert("Quantity cannot be empty!");
+	// 	}
+
+	// });
+
 
 	/////function calculate
 	// function calculate(dis, paid) {
@@ -180,14 +190,6 @@ $(document).ready(() => {
 			$("#department").addClass("border-danger");
 			$("#dept_error").html("<span class='text-danger'>Please Select Department</span>");
 
-		}else if($("#product_name").val() === "") {
-			$("#product_name").addClass("border-danger");
-			$("#p_error").html("<span class='text-danger'>Please Select a Product</span>");
-
-		}else if($("#qty").val() === "") {
-			$("#qty").addClass("border-danger");
-			$("#qty_error").html("<span class='text-danger'>Please Enter Quantity</span>");
-
 		}else {
 			$.ajax({
 			url: DOMAIN + "/includes/process.php",
@@ -196,38 +198,34 @@ $(document).ready(() => {
 			success: function(data) {
 				let invoice_no;
 					if (data === '["NO","YES"]') {
-						alert("Can't process");
+						alert("Sorry! Can't Process Order.");
 
 					 } else if (data = '["YES"]') {
-						invoice_no = Math.floor((Math.random() * 10) + 1);
-						alert("LNK" + invoice_no);
+						
+
+							const getRandomId = (min = 1000, max = 500000) => {
+							  min = Math.ceil(min);
+							  max = Math.floor(max);
+							  const num =  Math.floor(Math.random() * (max - min + 1)) + min;
+							  return num;
+							};
+
+							invoice_no = getRandomId();
+
+
+						$("#get_order_data").trigger("reset");
+						//alert("LNK" + invoice_no);
+						//if (confirm("Do u want to print invoice ?")) {
+							alert("Order Successful, Click OK to print Invoice");
+				  			window.open(
+				 			   DOMAIN+"/includes/invoice_bill.php?invoice_no="+invoice_no+"&"+invoice,
+					 		  '_blank' //  This is what makes it open in a new window.
+				  			);
+						//}
 					 } 
 
 					
 
-					// if (data === "OUT_OF_STOCK") {
-					// 	alert("A product is out of stock");
-					// }
-
-					//  if(data === "ORDER_FAIL_TO_COMPLETE") {
-					// 	alert("Sorry! One of your requests is out of stock");
-
-					// } else if (data === "CANNOT_PROCESS_ORDER") {
-					// 	alert("Sorry! One of your requests is out of stock");
-					// }
-					// else{
-					// 	$("#get_order_data").trigger("reset");
-
-					// 	// if (confirm("Do u want to print invoice ?")) {
-					// 		alert("Order Successful, Click OK to print Invoice");
-				 // 			window.open(
-				 // 			   DOMAIN+"/includes/invoice_bill.php?invoice_no="+data+"&"+invoice,
-					// 		  '_blank' //  This is what makes it open in a new window.
-				 // 			);
-					// 	//}
-
-
-					// }
 
 				
 			}

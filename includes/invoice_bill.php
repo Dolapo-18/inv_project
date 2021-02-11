@@ -51,8 +51,8 @@
 		$pdf->Cell(30,10,"Quantity",1,1,"C");
 		// $pdf->Cell(40,10,"Price",1,0,"C");
 		// $pdf->Cell(40,10,"Total (Rs)",1,1,"C");
-
-		 for ($i=0; $i < count($_GET["pid"]) ; $i++) { 
+		if (isset($_GET["pid"])) {
+			 for ($i=0; $i < count($_GET["pid"]) ; $i++) { 
 		 	$pdf->Cell(30,10,'',0,0);
 		 	$pdf->Cell(20,10, ($i+1) ,1,0,"C");
 		 	$pdf->Cell(80,10, $_GET["pro_name"][$i],1,0,"C");
@@ -60,6 +60,11 @@
 		// 	// $pdf->Cell(40,10, $_GET["price"][$i],1,0,"C");
 		// 	// $pdf->Cell(40,10, ($_GET["qty"][$i] * $_GET["price"][$i]) ,1,1,"C");
 		 }
+		} else {
+			echo "<h3>No Product was selected, Please go back and add a product.</h3>";
+			exit();
+		}
+		
 
 		$pdf->Cell(50,10,"",0,1);
 
