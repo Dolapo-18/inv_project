@@ -419,13 +419,13 @@ if (isset($_POST["getNewOrderItem"])) {
 	<tr>
 	    <td><b class="number"></b></td>
 	    <td>
-	        <select name="pid[]" class="form-control form-control-sm pid" id="" required>
+	        <select name="pid[]" class="form-control form-control-sm pid" id="p_name">
 	        	<option value="">---Select Product---</option>
 	            <?php 
 	            	foreach ($rows as $row) {
 	            		?>
 
-	            			<option value="<?php echo $row["product_id"]; ?>"><?php echo $row["product_name"]; ?></option>
+	            			<option id="p_name" value="<?php echo $row["product_id"]; ?>"><?php echo $row["product_name"]; ?></option>
 
 	            		<?php
 	            	}
@@ -435,10 +435,8 @@ if (isset($_POST["getNewOrderItem"])) {
 	        <small id="p_error" class="form-text text-muted"></small>
 	    </td>
 	    <td><input name="tqty[]" readonly type="text" class="form-control form-control-sm tqty"></td>   
-	    <td><input name="qty[]" type="text" class="form-control form-control-sm qty" placeholder="Enter Quantity" id="">
-	    	<small id="qty_error" class="form-text text-muted"></small>
-	    </td>
-	    <td><!--<input name="price[]" type="text" class="form-control form-control-sm price" readonly> -->
+	    <td><input name="qty_o[]" type="number" class="form-control form-control-sm qty_o" placeholder="" min="1" id="qty_o"></td>
+	    <td><input name="qty[]" type="text" class="form-control form-control-sm qty" placeholder="Enter Quantity" min="1">
 	    <span><input name="pro_name[]" type="hidden" class="form-control form-control-sm pro_name"></span></td>
 	    <td><!-- N <span class="amt" id="amt">0</span> --></td>
 	</tr>
@@ -470,6 +468,7 @@ if (isset($_POST["order_date"]) AND isset($_POST["staff_name"]) AND isset($_POST
 
 	//getting array variables
 	$ar_tqty = $_POST["tqty"];
+	$ar_qty_o = $_POST["qty_o"];
 	$ar_qty = $_POST["qty"];
 	// $ar_price = $_POST["price"];
 	$ar_pro_name = $_POST["pro_name"];
@@ -487,7 +486,7 @@ if (isset($_POST["order_date"]) AND isset($_POST["staff_name"]) AND isset($_POST
 		$m = new Manage();
 
 		
-		$result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type);
+		$result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty_o, $ar_qty, $ar_pro_name, $payment_type);
 		echo json_encode($result);
 	
 	    //$result = $m->storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type);

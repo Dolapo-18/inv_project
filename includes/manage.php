@@ -164,7 +164,7 @@ private function pagination($con, $table, $pno, $n) {
 
 
 	 /////////Process staff order
-	 public function storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty, $ar_pro_name, $payment_type) {
+	 public function storeStaffOrderInvoice($order_date, $staff_name, $department, $ar_tqty, $ar_qty_o, $ar_qty, $ar_pro_name, $payment_type) {
 
 	
 	 	$response = [];
@@ -204,9 +204,9 @@ private function pagination($con, $table, $pno, $n) {
 				
 
 
-				$insert_product = $this->con->prepare("INSERT INTO `invoice_details`(`invoice_no`, `product_name`, `qty`)
-				 VALUES (?,?,?)");
-				$insert_product->bind_param("isd",$invoice_no, $ar_pro_name[$i], $ar_qty[$i]);
+				$insert_product = $this->con->prepare("INSERT INTO `invoice_details`(`invoice_no`, `product_name`, `qty_o`, `qty`)
+				 VALUES (?,?,?,?)");
+				$insert_product->bind_param("isii",$invoice_no, $ar_pro_name[$i], $ar_qty_o[$i], $ar_qty[$i]);
 				$insert_product->execute() or die($this->con->error);
 			}
 

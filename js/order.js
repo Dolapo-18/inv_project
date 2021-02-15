@@ -32,7 +32,7 @@ $(document).ready(() => {
 
 
 	//change/fetch quantity if user changes input- product name
-	$("#invoice_item").delegate(".pid", "change", function() {
+	$("#invoice_item").on("change", ".pid", function() {
 		const pid = $(this).val(); //retrieve the id of selected product
 		const tqty = $("#tqty").val();
 		const tr = $(this).parent().parent(); //get the parent of the selected product
@@ -69,7 +69,7 @@ $(document).ready(() => {
 	
 
 
-	$("#invoice_item").delegate(".qty", "keyup", function() {
+	$("#invoice_item").on("keyup", ".qty", function() {
 		let qty = $(this);
 		let tr = $(this).parent().parent();
 
@@ -190,7 +190,12 @@ $(document).ready(() => {
 			$("#department").addClass("border-danger");
 			$("#dept_error").html("<span class='text-danger'>Please Select Department</span>");
 
-		}else {
+		} else if ($("#p_name").val() === "") {
+			$("#p_name").addClass("border-danger");
+			$("#qty_o").addClass("border-danger");
+
+		}
+		else {
 			$.ajax({
 			url: DOMAIN + "/includes/process.php",
 			method: "POST",
@@ -223,10 +228,6 @@ $(document).ready(() => {
 				  			);
 						//}
 					 } 
-
-					
-
-
 				
 			}
 		});

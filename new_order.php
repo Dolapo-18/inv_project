@@ -94,9 +94,10 @@
 		                                <th>#</th>
 		                                <th style="text-align:center;">Item Name</th>
 		                                <th style="text-align:center;">Total Quantity</th>
-		                                <th style="text-align:center;">Quantity</th>
-		                                <!-- <th style="text-align:center;">Unit Price</th>
-		                                <th>Total</th> -->
+		                                <th style="text-align:center;">Quantity Requested</th>
+		                                <th style="text-align:center;">Quantity Issued</th>
+		                                
+		                                
 		                              </tr>
 		                            </thead>
 		                            <tbody id="invoice_item">
@@ -172,6 +173,7 @@
                     </div>
 
                     <center>
+                    	<p style="font-size: 12px; color: red;">(Kindly ensure all fields are filled out completely before ordering*)</p>
                       <input type="submit" id="order_form" style="width:150px;" class="btn btn-info" value="Order" style="">
                       <input type="submit" id="print_invoice" style="width:150px;" class="btn btn-success d-none" value="Print Invoice">
                     </center>

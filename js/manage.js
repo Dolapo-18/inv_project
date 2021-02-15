@@ -329,7 +329,7 @@ $("#update_brand_form").on("submit", function() {
 
 ////////////////////Update Product
 $("#update_product_form").on("submit", function() {
-	if ($("#update_product_name").val() == "") {
+	if ($("#update_product_name").val() === "") {
 			$("#update_product_name").addClass("border-danger");
 			$("#p_error").html("<span class='text-danger'>Please Enter New Category Name</span>");
 
